@@ -1,6 +1,11 @@
+// /api/data.js
+import { v4 as uuidv4 } from 'uuid';
+
+let dataStore = {}; // In-memory storage, replace with a database for persistence
+
 export default async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Adjust as needed
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') {
@@ -9,13 +14,19 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-        const { data } = req.body;
-
-        // Log the received data to inspect it in Vercel logs
-        console.log('Received data:', data);
-
-        res.status(200).json({ message: 'Data received', data });
+        const { key, value } = req.body;
+        const id = uuidv4(); // Generate a unique ID for the data
+        dataStore[id] = { key, value }; // Store data with a unique ID
+        res.status(200).json({ message: 'Data saved', id });
+    } else if (req.method === 'GET') {
+        const { id } = req.query;
+        const data = dataStore[id];
+        if (data) {
+            res.status(200).json({ message: 'Data retrieved successfully', data });
+        } else {
+            res.status(404).json({ message: 'Data not found' });
+        }
     } else {
-        res.status(405).json({ message: 'Only POST requests are allowed' });
+        res.status(405).json({ message: 'Method not allowed' });
     }
 }
