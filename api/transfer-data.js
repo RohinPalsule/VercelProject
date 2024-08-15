@@ -1,5 +1,4 @@
 // /api/data.js
-import { v4 as uuidv4 } from 'uuid';
 
 let dataStore = {}; // In-memory storage, replace with a database for persistence
 
@@ -15,7 +14,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
         const { key, value } = req.body;
-        const id = uuidv4(); // Generate a unique ID for the data
+        const id = 4; // Generate a unique ID for the data
         dataStore[id] = { key, value }; // Store data with a unique ID
         res.status(200).json({ message: 'Data saved', id });
     } else if (req.method === 'GET') {
