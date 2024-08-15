@@ -10,7 +10,10 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
         const { data } = req.body;
-        // Forward or process the data as needed
+
+        // Log the received data to inspect it in Vercel logs
+        console.log('Received data:', data);
+
         res.status(200).json({ message: 'Data received', data });
     } else {
         res.status(405).json({ message: 'Only POST requests are allowed' });
