@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Adjust as needed
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Adjust for security if needed
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') {
@@ -8,14 +8,17 @@ export default async function handler(req, res) {
         return;
     }
 
-    if (req.method === 'POST') {
+    if (req.method === 'GET') {
+        // Handle GET request: Return some data
+        const data = 'Your data for GET request'; // Replace with your actual data
+        res.status(200).json({ message: 'Data retrieved successfully', data });
+    } else if (req.method === 'POST') {
+        // Handle POST request: Receive data
         const { data } = req.body;
-
-        // Log the received data to inspect it in Vercel logs
         console.log('Received data:', data);
-
         res.status(200).json({ message: 'Data received', data });
     } else {
-        res.status(405).json({ message: 'Only POST requests are allowed' });
+        // Handle any other methods that are not allowed
+        res.status(405).json({ message: 'Method not allowed' });
     }
 }
