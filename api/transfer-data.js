@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
         const { key, value } = req.body;
-        const id = 4; // Generate a unique ID for the data
+        const id = 10; // Generate a unique ID for the data
         dataStore[id] = { key, value }; // Store data with a unique ID
         res.status(200).json({ message: 'Data saved', id });
     } else if (req.method === 'GET') {
