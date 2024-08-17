@@ -11,10 +11,10 @@ export default async function handler(req, res) {
         res.status(200).end(); // Handle preflight requests
         return;
     }
-
     if (req.method === 'POST') {
         const { key, value } = req.body;
-        const id = 10; // Generate a unique ID for the data
+        const rohin=JSON.parse(value)
+        const id = rohin[1]; // Generate a unique ID for the data
         dataStore[id] = { key, value }; // Store data with a unique ID
         res.status(200).json({ message: 'Data saved', id });
     } else if (req.method === 'GET') {
@@ -29,3 +29,4 @@ export default async function handler(req, res) {
         res.status(405).json({ message: 'Method not allowed' });
     }
 }
+
