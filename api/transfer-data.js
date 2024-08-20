@@ -5,7 +5,7 @@ let dataStore = {}; // In-memory storage, replace with a database for persistenc
 export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x_id');
 
     if (req.method === 'OPTIONS') {
         res.status(200).end(); // Handle preflight requests
